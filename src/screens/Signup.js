@@ -1,13 +1,12 @@
-// Login.js
-
 import React from 'react';
 import { TextInput, StyleSheet, ScrollView, View, Text, TouchableOpacity, Alert } from 'react-native';
 import { observer } from 'mobx-react-lite';
 import { useNavigation } from '@react-navigation/native';
 import formStore from '../stores/Store';
 import { TextInputMask } from 'react-native-masked-text';
-import { SC } from '../services/serverCall'
+import { SC } from '../services/serverCall';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const Signup = observer(() => {
   const navigation = useNavigation();
@@ -22,12 +21,11 @@ const Signup = observer(() => {
           password: formStore.formData.password,
           address: formStore.formData.address,
         });
-
-        console.log('Result:', result); // Log the result for debugging
-
+        console.log('--->> GET token:', result);
         if (result.data && result.data.data && result.data.data.token) {
-          await AsyncStorage.setItem('token', JSON.stringify(result.data.data.token)); // Stringify the token object
-          navigation.navigate('home');
+          await AsyncStorage.setItem('userToken', JSON.stringify(result.data.data.token)); 
+          navigation.navigate('Home');
+          formStore.clearFormData();
         } else {
           Alert.alert('Error', result.message || 'Registration failed');
         }
@@ -51,9 +49,9 @@ const Signup = observer(() => {
             value={formStore.formData.name}
             onChangeText={(value) => formStore.setFormData('name', value)}
           />
-          {formStore.errors.name ? (
+          {formStore.errors.name && (
             <Text style={styles.errorText}>{formStore.errors.name}</Text>
-          ) : null}
+          )}
 
           <Text style={styles.label}>Phone Number</Text>
           <TextInputMask
@@ -67,9 +65,9 @@ const Signup = observer(() => {
             value={formStore.formData.phone_number}
             onChangeText={(value) => formStore.setFormData('phone_number', value)}
           />
-          {formStore.errors.phone_number ? (
+          {formStore.errors.phone_number && (
             <Text style={styles.errorText}>{formStore.errors.phone_number}</Text>
-          ) : null}
+          )}
 
           <Text style={styles.label}>Password</Text>
           <TextInput
@@ -79,9 +77,9 @@ const Signup = observer(() => {
             value={formStore.formData.password}
             onChangeText={(value) => formStore.setFormData('password', value)}
           />
-          {formStore.errors.password ? (
+          {formStore.errors.password && (
             <Text style={styles.errorText}>{formStore.errors.password}</Text>
-          ) : null}
+          )}
 
           <Text style={styles.label}>Address</Text>
           <TextInput
@@ -90,9 +88,9 @@ const Signup = observer(() => {
             value={formStore.formData.address}
             onChangeText={(value) => formStore.setFormData('address', value)}
           />
-          {formStore.errors.address ? (
+          {formStore.errors.address && (
             <Text style={styles.errorText}>{formStore.errors.address}</Text>
-          ) : null}
+          )}
 
           <TouchableOpacity style={styles.button} onPress={handleRegister}>
             <Text style={styles.createAccountSign}>Register</Text>
@@ -111,20 +109,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f0f0f0',
-    paddingHorizontal: 30,
-    paddingTop: 20,
+    paddingHorizontal: wp('10%'),
+    paddingTop: hp('7%'),
   },
   formContainer: {
-    marginTop: 20,
+    marginTop: hp('2%'),
   },
   label: {
-    fontSize: 18,
-    marginBottom: 5,
+    fontSize: hp('2.5%'),
+    marginBottom: hp('1%'),
     color: '#333',
     fontFamily: 'OpenSans-SemiBold',
   },
   input: {
-    height: 50,
+    height: hp('6%'),
     borderColor: '#ddd',
     borderWidth: 1,
     borderRadius: 5,
@@ -137,26 +135,26 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 5,
-    marginBottom: 20,
-    paddingHorizontal: 10,
-    fontSize: 16,
+    marginBottom: hp('2.5%'),
+    paddingHorizontal: wp('2.5%'),
+    fontSize: hp('2%'),
   },
   button: {
     backgroundColor: '#C94C02',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    marginBottom: 13,
+    paddingVertical: hp('2%'),
+    paddingHorizontal: wp('7%'),
+    borderRadius: wp('6.25%'),
+    marginBottom: hp('2%'),
   },
   createAccountSign: {
     color: 'white',
-    fontSize: 18,
+    fontSize: hp('2.5%'),
     textAlign: 'center',
     fontFamily: 'OpenSans-SemiBold',
   },
   errorText: {
     color: 'red',
-    marginBottom: 8,
+    marginBottom: hp('1%'),
   },
 });
 

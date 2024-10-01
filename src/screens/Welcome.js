@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, ImageBackground,TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TouchableOpacity } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
-const WelcomeScreen = ({navigation}) => {
+const WelcomeScreen = ({ navigation }) => {
   return (
     <ImageBackground 
       source={require('../assets/bg.png')} 
@@ -12,9 +13,10 @@ const WelcomeScreen = ({navigation}) => {
         <Text style={styles.description}>
           Welcome to YumYum! The best place to find delicious recipes.
         </Text>
-        <TouchableOpacity style={styles.button}
-         onPress={() => navigation.navigate('Onboarding')}
-         >
+        <TouchableOpacity 
+          style={styles.button}
+          onPress={() => navigation.navigate('Onboarding')}
+        >
           <Text style={styles.buttonText}>Get Started</Text>
         </TouchableOpacity>
       </View>
@@ -24,49 +26,46 @@ const WelcomeScreen = ({navigation}) => {
 
 const styles = StyleSheet.create({
   background: {
-    width: '100%',
-    height: '100%',
+    width: wp('100%'),
+    height: hp('100%'),
     justifyContent: 'center',
     alignItems: 'center',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    width: '100%',
-    height: '100%',
-    padding: 20,
+    width: wp('100%'),
+    height: hp('100%'),
+    padding: wp('5%'),
     justifyContent: 'center',
     alignItems: 'center',
   },
   heading: {
-    fontSize: 67,
+    fontSize: wp('15%'),
     fontWeight: 'bold',
     color: 'white',
-    marginBottom: 10,
+    marginBottom: hp('2%'),
     fontFamily: 'OpenSans-SemiBold',
-     // Replace with your custom font name
   },
   description: {
-    fontSize: 18,
+    fontSize: wp('5%'),
     color: 'white',
     textAlign: 'center',
-    marginBottom: 20,   
-    fontFamily: 'Poppins-Regular', // Replace with your custom font name
+    marginBottom: hp('3%'),
+    fontFamily: 'Poppins-Regular',
   },
   button: {
     backgroundColor: '#C94C02',
-    paddingVertical: 15,
-    paddingHorizontal: 50,
+    paddingVertical: hp('2%'),
+    paddingHorizontal: wp('10%'),
     borderRadius: 25,
-    marginBottom: 10,
-    
+    marginBottom: hp('2%'),
   },
   buttonText: {
     color: 'white',
-    fontSize: 18,
+    fontSize: wp('5%'),
     textAlign: 'center',
     fontFamily: 'OpenSans-SemiBold',
   },
-
 });
 
 export default WelcomeScreen;

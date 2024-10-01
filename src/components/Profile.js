@@ -5,18 +5,22 @@ import { observer } from 'mobx-react-lite';
 import profileStore from '../stores/ProfileStore';
 
 const ProfileScreen = observer(({ navigation }) => {
-  const { username, mobileNumber, isModalVisible, editField, tempValue, isLoading } = profileStore;
+  const { username, address, mobileNumber, isModalVisible, tempUsername, tempAddress, tempMobileNumber, isLoading } = profileStore;
 
   useEffect(() => {
     profileStore.fetchUserData();
   }, []);
 
-  const handleEdit = (field) => {
-    profileStore.setEditField(field);
+  const handleEdit = () => {
+    profileStore.setEditFields();
   };
 
   const handleSave = () => {
     profileStore.handleSave();
+  };
+
+  const getFirstLetter = (name) => {
+    return name ? name.charAt(0).toUpperCase() : '';
   };
 
   return (
@@ -35,24 +39,28 @@ const ProfileScreen = observer(({ navigation }) => {
         </View>
       ) : (
         <View style={styles.profileContainer}>
+          
           <View style={styles.iconContainer}>
-            <Text style={styles.iconText}>A</Text>
+            <Text style={styles.iconText}>{getFirstLetter(username)}</Text>
           </View>
           <View style={styles.infoContainer}>
-            <TouchableOpacity style={styles.infoBox} onPress={() => handleEdit('username')}>
+          <TouchableOpacity style={styles.editButton} onPress={handleEdit}>
+              <Icon name="edit" size={18} color="#C94C02" />
+              <Text style={styles.editButtonText}></Text>
+            </TouchableOpacity>
+            <View style={styles.infoBox}>
               <Text style={styles.label}>Username:</Text>
-              <View style={styles.infoContent}>
-                <Text style={styles.infoText}>{username}</Text>
-                <Icon name="edit" size={16} color="#C94C02" style={styles.cardIcon} />
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.infoBox} onPress={() => handleEdit('mobileNumber')}>
+              <Text style={styles.infoText}>{username}</Text>
+            </View>
+            <View style={styles.infoBox}>
               <Text style={styles.label}>Mobile number:</Text>
-              <View style={styles.infoContent}>
-                <Text style={styles.infoText}>{mobileNumber}</Text>
-                <Icon name="edit" size={16} color="#C94C02" style={styles.cardIcon} />
-              </View>
-            </TouchableOpacity>
+              <Text style={styles.infoText}>{mobileNumber}</Text>
+            </View>
+            <View style={styles.infoBox}>
+              <Text style={styles.label}>Address:</Text>
+              <Text style={styles.infoText}>{address}</Text>
+            </View>
+            
           </View>
         </View>
       )}
@@ -65,12 +73,25 @@ const ProfileScreen = observer(({ navigation }) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalView}>
-            <Text style={styles.modalTitle}>Edit {editField === 'username' ? 'Username' : 'Mobile Number'}</Text>
+            <Text style={styles.modalTitle}>Edit Profile</Text>
             <TextInput
               style={styles.input}
-              onChangeText={profileStore.setTempValue}
-              value={tempValue}
-              keyboardType={editField === 'mobileNumber' ? 'phone-pad' : 'default'}
+              placeholder="Username"
+              onChangeText={(text) => profileStore.setTempUsername(text)}
+              value={tempUsername}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Mobile Number"
+              onChangeText={(text) => profileStore.setTempMobileNumber(text)}
+              value={tempMobileNumber}
+              keyboardType="phone-pad"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Address"
+              onChangeText={(text) => profileStore.setTempAddress(text)}
+              value={tempAddress}
             />
             <View style={styles.modalButtons}>
               <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
@@ -157,16 +178,22 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontFamily: 'OpenSans-SemiBold',
   },
-  infoContent: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
   infoText: {
     color: '#333',
     fontSize: 16,
     fontWeight: '500',
     fontFamily: 'OpenSans-SemiBold',
+  },
+  editButton: {
+    flexDirection: 'row',
+    alignItems: 'right',
+    justifyContent:"flex-end",
+    marginBottom: 20,
+    marginRight:10,
+  },
+  editButtonText: {
+    color: '#C94C02',
+    marginLeft: 5,
   },
   modalContainer: {
     flex: 1,
@@ -220,6 +247,11 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 

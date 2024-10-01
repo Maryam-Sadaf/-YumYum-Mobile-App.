@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { widthPercentageToDP as wp, heightPercentageToDP as hp } from 'react-native-responsive-screen';
 
 const OnboardingScreen = ({ navigation }) => {
     return (
@@ -28,53 +29,49 @@ const OnboardingScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     container: {
-        // flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
         backgroundColor: '#F7F7F7',
-        width: '100%',
-        height: '100%',
-        paddingTop: 10,
-        paddingHorizontal: 20,
+        width: wp('100%'),
+        height: hp('100%'),
+        paddingTop: hp('2%'),
+        paddingHorizontal: wp('5%'),
     },
     container2: {
-        marginTop: "50%"
+        marginTop: hp('15%'),
     },
     image: {
-        width: '70%',
-        height: '50%',
+        width: wp('70%'),
+        height: hp('50%'),
         resizeMode: 'cover',
         position: 'absolute',
         top: 0,
         left: 0,
     },
     descriptionText: {
-        textAlign: 'start',
-        fontSize: 28,
+        textAlign: 'left',
+        fontSize: wp('7%'),
         color: '#000000',
         fontFamily: 'OpenSans-SemiBold',
     },
     descriptionText2: {
-        textAlign: 'start',  
-        fontSize: 23,    
-        marginBottom: "5%",
-        fontFamily: 'Poppins-Regular'
+        textAlign: 'left',
+        fontSize: wp('6%'),
+        marginBottom: hp('5%'),
+        fontFamily: 'Poppins-Regular',
     },
     createAccountButton: {
         backgroundColor: '#C94C02',
-        paddingVertical: 15,
-        paddingHorizontal: 30,
-        borderRadius: 25,
-        marginBottom: 15,
-        
-       
+        paddingVertical: hp('2%'),
+        paddingHorizontal: wp('10%'),
+        borderRadius: wp('6%'),
+        marginBottom: hp('2%'),
     },
     createAccountButtonText: {
         color: 'white',
-        fontSize: 18,
+        fontSize: wp('5%'),
         textAlign: 'center',
         fontFamily: 'OpenSans-SemiBold',
-      
     },
     signInContainer: {
         justifyContent: "center",
@@ -83,15 +80,15 @@ const styles = StyleSheet.create({
     },
     signInText: {
         color: 'blue',
-        fontSize: 18,
+        fontSize: wp('5%'),
         textAlign: 'center',
-        fontFamily: 'Roboto', // Using Roboto font family
+        fontFamily: 'Roboto',
     },
     signInButtonText: {
         color: 'blue',
-        fontSize: 18,
+        fontSize: wp('5%'),
         textAlign: 'center',
-        marginLeft: 5,
+        marginLeft: wp('1%'),
         fontFamily: 'OpenSans-SemiBold',
     }
 });

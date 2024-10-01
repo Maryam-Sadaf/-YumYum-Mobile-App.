@@ -64,6 +64,7 @@ class SigninStore {
     if (this.validateForm()) {
       try {
         const result = await SC.postCall('/user_login', {
+          
           phone_number: this.formData.phone_number,
           password: this.formData.password,
         });
@@ -81,7 +82,7 @@ class SigninStore {
         return { success: false };
       }
     } else {
-      this.setError('general', 'Please fix the errors and try again.');
+      this.setError('general',);
       return { success: false };
     }
   }

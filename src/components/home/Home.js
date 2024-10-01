@@ -11,7 +11,7 @@ const Home = observer(({ navigation }) => {
       id: 1,
       title: 'Yum yum Special Burger',
       price: 800,
-      image: require('../../assets/home1.jpeg'),
+      image: require('../../assets/dealimg.jpg'),
     },
   ];
 
@@ -65,8 +65,8 @@ const Home = observer(({ navigation }) => {
       </View>
       <View style={styles.columnsContainer}>
         {/* Food Delivery Deal */}
-        <TouchableOpacity style={styles.columnCard} onPress={() => navigation.navigate('Restaurant')}>
-          <Image source={require('../../assets/fooddelivery.jpeg')} style={styles.columnImage} />
+        <TouchableOpacity style={styles.columnCard} onPress={() => navigation.navigate('Restaurants')}>
+          <Image source={require('../../assets/fooddelivery.jpg')} style={styles.columnImage} />
           <View style={styles.columnTextContainer}>
             <Text style={styles.columnTitle}>Food delivery</Text>
             <Text style={styles.columnDescription}>Order food you love</Text>
@@ -75,7 +75,7 @@ const Home = observer(({ navigation }) => {
 
         {/* Become a Partner Deal */}
         <TouchableOpacity style={styles.columnCard}>
-          <Image source={require('../../assets/patner.jpeg')} style={styles.columnImage} />
+          <Image source={require('../../assets/patner.jpg')} style={styles.columnImage} />
           <View style={styles.columnTextContainer}>
             <Text style={styles.columnTitle}>Become a partner</Text>
             <Text style={styles.columnDescription}>Get 10 free delivery</Text>
